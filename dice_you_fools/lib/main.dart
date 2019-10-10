@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Helvetica',
         ),
         home: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
@@ -52,31 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        _getStreamChild(),
-        FloatingActionButton(
-          onPressed: () {
-            bloc.incrementCounter();
-          },
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
+        Text(
+          "Dice, You Fools !",
+          style: TextStyle(fontSize: 50, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'Montserra'),
         ),
       ],
     ));
-  }
-
-  Widget _getStreamChild() {
-    final CounterBloc bloc = BlocProvider.of<CounterBloc>(context);
-    return StreamBuilder(
-      initialData: 0,
-      stream: bloc.counterStream,
-      builder: (BuildContext context, snapshot) {
-        return Center(
-          child: Text(
-            "Clicked " + snapshot.data.toString() + " times!",
-            style: TextStyle(fontSize: 18),
-          ),
-        );
-      },
-    );
   }
 }
