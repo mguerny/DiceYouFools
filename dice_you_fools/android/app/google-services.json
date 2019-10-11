@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "885970333292",
+    "firebase_url": "https://mlgproject.firebaseio.com",
+    "project_id": "mlgproject",
+    "storage_bucket": "mlgproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885970333292:android:d67629d6f84b4b8b",
+        "android_client_info": {
+          "package_name": "com.jdr.flutter.ynov.diceyoufools"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "885970333292-6is5j10b2uu8pehbibl3r0f11jj3c2bo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpA4pYA9m6wqGce_gJ4D0axgS080m1wI4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
