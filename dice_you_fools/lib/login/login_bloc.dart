@@ -46,8 +46,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print("GoogleButtonPressed");
       try{
 
-        final token = await userRepository.authenticateWithGoogle();
-        authenticationBloc.dispatch(LoggedIn(token: token));
+        //final token = await userRepository.authenticateWithGoogle();
+        //authenticationBloc.dispatch(LoggedIn(token: token));
         yield LoginInitial();
       } catch (error){
         yield LoginFailure(error: error.toString());
