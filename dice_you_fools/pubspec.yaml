@@ -27,3 +27,10 @@ flutter:
   assets:
     - assets/images/
 
+  fonts:
+    - family: Helvetica
+      fonts:
+        - asset: fonts/Helvetica.ttf
+        - asset: fonts/Helvetica-bold.ttf
+          weight: 700
+
