@@ -9,9 +9,11 @@ class GameListBloc extends Bloc<GameListEvent, GameListState> {
   GameListState get initialState => null;
 
   @override
-  Stream<GameListState> mapEventToState(GameListState currentState, GameListEvent event) {
-    return null;
+  Stream<GameListState> mapEventToState(GameListState currentState, GameListEvent event) async* {
+
   }
+
+
 
 
 

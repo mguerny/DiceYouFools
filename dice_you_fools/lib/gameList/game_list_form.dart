@@ -1,3 +1,4 @@
+import 'package:dice_you_fools/gameCreation/game_crea_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -226,11 +227,13 @@ class _GameListFormState extends State<GameListForm> {
                           color: Colors.black,
                         ),
                       ),
-                      GestureDetector( // TODAY
-                        onTap: (){
+                      GestureDetector( // ADD GAME
+                        onTap: () async {
                           print("Add Game clicked");
+                          final toto = await Navigator.pushNamed(context, '/second');
+                          print(toto);
                         },
-                        child: CircleAvatar( // Clock image
+                        child: CircleAvatar( // Plus image
                             backgroundImage: AssetImage("assets/images/plus.png"),
                             backgroundColor: Color.fromRGBO(31, 58, 147, 1),
                         ),
@@ -267,7 +270,7 @@ class _GameListFormState extends State<GameListForm> {
                             });
                             // Shows the information on Snackbar
                             Scaffold.of(context)
-                                .showSnackBar(SnackBar(content: Text("$currentGame dismissed")));
+                                .showSnackBar(SnackBar(content: Text("$currentGame deleted")));
                           },
                           background: Container(color: Colors.red),
                           child: ListTile(

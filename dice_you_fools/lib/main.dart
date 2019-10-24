@@ -1,3 +1,4 @@
+import 'package:dice_you_fools/routes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
@@ -9,6 +10,10 @@ import 'package:dice_you_fools/splash/splash.dart';
 import 'package:dice_you_fools/login/login.dart';
 import 'package:dice_you_fools/home/home.dart';
 import 'package:dice_you_fools/common/common.dart';
+import 'package:dice_you_fools/gameCreation/game_crea.dart';
+
+import 'gameCreation/game_crea_page.dart';
+import 'gameList/game_list_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
@@ -58,9 +63,9 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationBloc>(
-      bloc: _authenticationBloc,
-      child: MaterialApp(
+    var materialApp = MaterialApp(
+        initialRoute: '/',
+        routes: routes,
         home: BlocBuilder<AuthenticationEvent, AuthenticationState>(
           bloc: _authenticationBloc,
           builder: (BuildContext context, AuthenticationState state) {
@@ -76,9 +81,18 @@ class _AppState extends State<App> {
             if (state is AuthenticationLoading) {
               return LoadingIndicator();
             }
+            if (state is GameListDisplay) {
+              return GameListPage();
+            }
+            if (state is GameCreaDisplay) {
+              return GameCreaPage();
+            }
           },
         ),
-      ),
+      );
+    return BlocProvider<AuthenticationBloc>(
+      bloc: _authenticationBloc,
+      child: materialApp,
     );
   }
 }
