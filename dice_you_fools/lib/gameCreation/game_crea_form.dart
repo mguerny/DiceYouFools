@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dice_you_fools/model/game.dart';
+import 'package:dice_you_fools/model/user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +29,13 @@ class _GameCreaFormState extends State<GameCreaForm> {
 
   GameCreaBloc get _gameCreaBloc => widget.gameCreaBloc;
   
-  final _players = List<String>.from(["Michoule F.", "Antoirne R.", "Plaul V."]);
+
+
+  List<User> _players = List<User>.from([new User(id: "a", name: "Michoule F.", email: "b"), 
+                                    new User(id: "b", name: "Antoirne R.", email: "b"),
+                                    new User(id: "c", name: "Plaul V.", email: "b")]);
   final nameController = TextEditingController();
+  final locationController = TextEditingController();
   
   DateTime selectedDate = DateTime.now();
 
@@ -93,7 +100,7 @@ class _GameCreaFormState extends State<GameCreaForm> {
                     ),
                   ),
                 ),
-                Padding( // DESCRIPTION
+                Padding( // LOCATION
                   padding: const EdgeInsets.only(
                     left: 0,
                     top: 20,
@@ -101,7 +108,7 @@ class _GameCreaFormState extends State<GameCreaForm> {
                     bottom: 5,
                   ),
                   child: Text(
-                    'Description',
+                    'Location',
                     style: TextStyle(
                       fontFamily: "Helvetica",
                       fontWeight: FontWeight.bold,
@@ -110,7 +117,7 @@ class _GameCreaFormState extends State<GameCreaForm> {
                     ),
                   ),
                 ),
-                Padding( // INPUT DESCRIPTION
+                Padding( // INPUT LOCATION
                   padding: const EdgeInsets.only(
                     left: 0,
                     top: 0,
@@ -118,11 +125,12 @@ class _GameCreaFormState extends State<GameCreaForm> {
                     bottom: 20,
                   ),
                   child: TextField(
+                    controller: locationController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder (
                         borderRadius:BorderRadius.circular(20.0)
                       ),
-                      hintText: 'Once upon a time ...'
+                      hintText: 'The Shire'
                     ),
                   ),
                 ),
@@ -222,11 +230,11 @@ class _GameCreaFormState extends State<GameCreaForm> {
                       shrinkWrap: true,
                       itemCount: _players.length,
                       itemBuilder: (BuildContext ctxt, int index) {
-                        final currentPlayer = _players[index];
+                        User currentPlayer = _players[index];
 
                         return Dismissible(
                           direction: DismissDirection.endToStart,
-                          key: Key(currentPlayer),
+                          key: Key(currentPlayer.id),
                           onDismissed: (direction) {
                             // Removes that item the list on swipwe
                             setState(() {
@@ -234,7 +242,7 @@ class _GameCreaFormState extends State<GameCreaForm> {
                             });
                             // Shows the information on Snackbar
                             Scaffold.of(context)
-                                .showSnackBar(SnackBar(content: Text("$currentPlayer shall not participate")));
+                                .showSnackBar(SnackBar(content: Text(currentPlayer.name + " shall not participate")));
                           },
                           background: Container(color: Colors.red),
                           child: ListTile(
@@ -243,7 +251,7 @@ class _GameCreaFormState extends State<GameCreaForm> {
                               backgroundColor: Color.fromRGBO(247, 202, 24, 1),
                             ),
                             title: Text(
-                              currentPlayer,
+                              currentPlayer.name,
                               style: TextStyle(
                                 fontFamily: "Helvetica",
                                 fontSize: 20.0,
@@ -273,7 +281,8 @@ class _GameCreaFormState extends State<GameCreaForm> {
                       GestureDetector( // CONFIRM
                         onTap: (){
                           print("Confirm game clicked");
-                          Navigator.of(context).pop(nameController.text);
+                          Game game = Game(id: "a", name: nameController.text, location: locationController.text, users: _players);
+                          Navigator.of(context).pop(game);
                         },
                         child: CircleAvatar( // Check image
                           radius: 25,

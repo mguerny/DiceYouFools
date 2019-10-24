@@ -1,4 +1,5 @@
 import 'package:dice_you_fools/gameCreation/game_crea_page.dart';
+import 'package:dice_you_fools/model/game.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,7 @@ class _GameListFormState extends State<GameListForm> {
 
   GameListBloc get _gameListBloc => widget.gameListBloc;
   
-  final _games = List<String>.from(["Panic at Walmart", "Prosopopée", "Cthulhu"]);
+  List<Game> _games = List<Game>.from([new Game(id: "a", name: "Panic At Walmart", location: ":shrug:", users: [])]);
 
   @override
   Widget build(BuildContext context) {
@@ -230,8 +231,8 @@ class _GameListFormState extends State<GameListForm> {
                       GestureDetector( // ADD GAME
                         onTap: () async {
                           print("Add Game clicked");
-                          final toto = await Navigator.pushNamed(context, '/second');
-                          print(toto);
+                          final game = await Navigator.pushNamed(context, '/gameCrea');
+                          _games.add(game);
                         },
                         child: CircleAvatar( // Plus image
                             backgroundImage: AssetImage("assets/images/plus.png"),
@@ -258,11 +259,11 @@ class _GameListFormState extends State<GameListForm> {
                       shrinkWrap: true,
                       itemCount: _games.length,
                       itemBuilder: (BuildContext ctxt, int index) {
-                        final currentGame = _games[index];
+                        Game currentGame = _games[index];
 
                         return Dismissible(
                           direction: DismissDirection.endToStart,
-                          key: Key(currentGame),
+                          key: Key(currentGame.id),
                           onDismissed: (direction) {
                             // Removes that item the list on swipwe
                             setState(() {
@@ -270,7 +271,7 @@ class _GameListFormState extends State<GameListForm> {
                             });
                             // Shows the information on Snackbar
                             Scaffold.of(context)
-                                .showSnackBar(SnackBar(content: Text("$currentGame deleted")));
+                                .showSnackBar(SnackBar(content: Text(currentGame.name + " deleted")));
                           },
                           background: Container(color: Colors.red),
                           child: ListTile(
@@ -279,7 +280,7 @@ class _GameListFormState extends State<GameListForm> {
                               backgroundColor: Color.fromRGBO(247, 202, 24, 1),
                             ),
                             title: Text(
-                              currentGame,
+                              currentGame.name,
                               style: TextStyle(
                                 fontFamily: "Helvetica",
                                 fontSize: 20.0,
@@ -290,6 +291,10 @@ class _GameListFormState extends State<GameListForm> {
                               Icons.keyboard_arrow_right,
                               color: Colors.white,
                             ),
+                            onTap: () async {
+                              print("Display game " + currentGame.name);
+                              await Navigator.pushNamed(context, '/gameDisp', arguments: currentGame);
+                            },
                           ),
                         );
                       }
