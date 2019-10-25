@@ -57,8 +57,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: RichText(
                     text: TextSpan(
                       children: <TextSpan>[
-                        TextSpan(text: "My"),
-                        TextSpan(text: "Emoji", style: TextStyle(fontWeight: FontWeight.w300),),
+                        TextSpan(text: "Connexion", style: TextStyle(fontWeight: FontWeight.w300),),
                       ],
                       style: TextStyle(
                         fontFamily: "Quicksand",
