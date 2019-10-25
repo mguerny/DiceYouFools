@@ -1,4 +1,5 @@
-import 'package:dice_you_fools/gameCreation/game_crea_page.dart';
+import 'dart:math';
+
 import 'package:dice_you_fools/model/game.dart';
 import 'package:dice_you_fools/model/user.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'game_disp_state.dart';
 
 class GameDispForm extends StatefulWidget {
   final GameDispBloc gameDispBloc;
-
+  
 
   GameDispForm({
     Key key,
@@ -26,12 +27,12 @@ class GameDispForm extends StatefulWidget {
 class _GameDispFormState extends State<GameDispForm> {
 
   GameDispBloc get _gameDispBloc => widget.gameDispBloc;
+  int _diceResult;
 
   @override
   Widget build(BuildContext context) {
     
     final Game game = ModalRoute.of(context).settings.arguments;
-    print(game.users.length.toString());
 
     return BlocBuilder<GameDispEvent, GameDispState>(
       bloc: _gameDispBloc,
@@ -158,7 +159,6 @@ class _GameDispFormState extends State<GameDispForm> {
                       itemCount: game.users.length,
                       itemBuilder: (BuildContext ctxt, int index) {
                         User currentPlayer = game.users[index];
-                        print("player " + index.toString());
                         return new ListTile(
                           leading: CircleAvatar(
                             backgroundImage: AssetImage("assets/images/game.png"),
@@ -176,9 +176,62 @@ class _GameDispFormState extends State<GameDispForm> {
                             Icons.keyboard_arrow_right,
                             color: Colors.white,
                           ),
+                          onTap: () async {
+                            print("Display player " + currentPlayer.name);
+                            await Navigator.pushNamed(context, '/userDisp', arguments: currentPlayer);
+                          },
                         );
                       }
                     )
+                  ),
+                ),
+                Padding( // DICE
+                  padding: const EdgeInsets.only(
+                    left: 0,
+                    top: 20,
+                    right: 0,
+                    bottom: 0,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      GestureDetector( // DICE BUTTON
+                        onTap: (){
+                          var rng =  Random();
+                          setState(() {
+                            _diceResult =rng.nextInt(100);
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 0,
+                            top: 0,
+                            right: 0,
+                            bottom: 20,
+                          ),
+                          child: CircleAvatar( // Dice image
+                              radius: 50,
+                              backgroundImage: AssetImage("assets/images/dice.png"),
+                              backgroundColor: Color.fromRGBO(0, 0, 0, 1),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                          top: 0,
+                          right: 0,
+                          bottom: 20,
+                        ),
+                        child:Text(
+                          "[${_diceResult ?? '?'}/100]",
+                          style: TextStyle(
+                            fontFamily: "Helvetica",
+                            fontSize: 35.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

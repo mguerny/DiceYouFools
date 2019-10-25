@@ -1,5 +1,7 @@
+import 'package:dice_you_fools/gameDisp/game_disp_state.dart';
 import 'package:dice_you_fools/router.dart' as router;
 import 'package:dice_you_fools/routes.dart';
+import 'package:dice_you_fools/userDisp/user_disp_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
@@ -91,6 +93,9 @@ class _AppState extends State<App> {
             }
             if (state is GameDispDisplay) {
               return GameDispPage();
+            }
+            if (state is UserDispDisplay) {
+              return UserDispPage();
             }
           },
         ),

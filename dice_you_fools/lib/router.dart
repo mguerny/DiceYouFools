@@ -1,3 +1,4 @@
+import 'package:dice_you_fools/userDisp/user_disp_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => GameCreaPage());
     case '/gameDisp':
       return MaterialPageRoute(builder: (context) => GameDispPage());
+    case '/userDisp':
+      return MaterialPageRoute(builder: (context) => UserDispPage());
     default:
       return MaterialPageRoute(builder: (context) => GameListPage());
   }

@@ -29,11 +29,16 @@ class _GameCreaFormState extends State<GameCreaForm> {
 
   GameCreaBloc get _gameCreaBloc => widget.gameCreaBloc;
   
-
-
-  List<User> _players = List<User>.from([new User(id: "a", name: "Michoule F.", email: "b"), 
-                                    new User(id: "b", name: "Antoirne R.", email: "b"),
-                                    new User(id: "c", name: "Plaul V.", email: "b")]);
+  List<User> _players = List<User>.from([new User(name: "Michoule F.", email: "a"), 
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Antoirne R.", email: "b"),
+                                    new User(name: "Plaul V.", email: "c")]);
   final nameController = TextEditingController();
   final locationController = TextEditingController();
   
@@ -234,7 +239,7 @@ class _GameCreaFormState extends State<GameCreaForm> {
 
                         return Dismissible(
                           direction: DismissDirection.endToStart,
-                          key: Key(currentPlayer.id),
+                          key: Key(currentPlayer.email),
                           onDismissed: (direction) {
                             // Removes that item the list on swipwe
                             setState(() {

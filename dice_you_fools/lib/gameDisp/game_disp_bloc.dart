@@ -13,8 +13,4 @@ class GameDispBloc extends Bloc<GameDispEvent, GameDispState> {
 
   }
 
-
-
-
-
 }
