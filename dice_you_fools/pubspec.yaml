@@ -15,6 +15,10 @@ dependencies:
   meta: ^1.1.6
   equatable: 0.1.6
   bloc: ^0.9.0
+  amazon_cognito_identity_dart: ^0.0.22
+  shared_preferences:
+  apple_sign_in: ^0.1.0
+  flutter_secure_storage: ^3.3.1+1
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:dice_you_fools/authentication/authentication.dart';
 import 'package:dice_you_fools/login/login.dart';
 
@@ -24,6 +24,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _codeValidationController = TextEditingController();
 
   LoginBloc get _loginBloc => widget.loginBloc;
 
@@ -125,6 +126,35 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   ),
                 ),
+                SizedBox(height: 16.0),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(32.0)
+                  ),
+                  child:
+                  TextFormField(
+                    controller: _codeValidationController,
+                    autofocus: false,
+                    obscureText: true,
+                    style: TextStyle(
+                      fontFamily: "Quicksand",
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromRGBO(0, 223, 186, 1),
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Code validation',
+                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      hintStyle: TextStyle(
+                        fontFamily: "Quicksand",
+                        fontWeight: FontWeight.w300,
+                        fontSize: 22.0,
+                        color: Color.fromRGBO(0, 223, 186, 1),
+                      ),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
                 FlatButton(
                   onPressed: (){},
                   child: Text(
@@ -148,22 +178,28 @@ class _LoginFormState extends State<LoginForm> {
                   color: Colors.white,
                   child: Text('Connexion', style: TextStyle(color: Colors.red, fontFamily: "Quicksand", fontWeight: FontWeight.w500, fontSize: 22.0,)),
                 ),
-                SizedBox(height: 8.0),
-                RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  onPressed:
-                  state is! LoginLoading ? _onGoogleButtonPressed : null,
-
-                  padding: EdgeInsets.all(12),
-                  color: Colors.red,
-                  child: Text('Google', style: TextStyle(color: Colors.white, fontFamily: "Quicksand", fontWeight: FontWeight.w500,fontSize: 22.0,)),
+                SizedBox(height: 38.0),
+                AppleSignInButton(
+                  onPressed: _onAppleSignInPressed,
                 ),
+                SizedBox(height: 8.0),
                 FlatButton(
-                  onPressed: (){},
+                  onPressed: state is! LoginLoading ? _onSignUpButtonPressed : null,
                   child: Text(
                     'Pas encore inscrit ? C\'est par ici ! ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.underline,
+                      fontFamily: "Quicksand",
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                FlatButton(
+                  onPressed: state is! LoginLoading ? _onCodeValidateButtonPressed : null,
+                  child: Text(
+                    'Valider le code',
                     style: TextStyle(
                       color: Colors.white,
                       decoration: TextDecoration.underline,
@@ -192,6 +228,10 @@ class _LoginFormState extends State<LoginForm> {
     });
   }
 
+  _onAppleSignInPressed(){
+    _loginBloc.dispatch(AppleSignInButtonPressed());
+  }
+
   _onLoginButtonPressed() {
     _loginBloc.dispatch(LoginButtonPressed(
       username: _usernameController.text,
@@ -200,5 +240,19 @@ class _LoginFormState extends State<LoginForm> {
   }
   _onGoogleButtonPressed(){
     _loginBloc.dispatch(GoogleButtonPressed());
+  }
+
+  _onSignUpButtonPressed(){
+    _loginBloc.dispatch(SignUpButtonPressed(
+      username: _usernameController.text,
+      password: _passwordController.text,
+    ));
+  }
+
+  _onCodeValidateButtonPressed(){
+    _loginBloc.dispatch(CodeValidateButtonPressed(
+      code: _codeValidationController.text,
+      email: _usernameController.text,
+    ));
   }
 }

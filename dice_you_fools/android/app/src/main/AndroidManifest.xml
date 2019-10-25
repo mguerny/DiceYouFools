@@ -15,7 +15,7 @@
     <application
 
         android:name="io.flutter.app.FlutterApplication"
-        android:label="my_emojy"
+        android:label="Dice You Fools"
         android:icon="@mipmap/ic_launcher"
         >
         <activity
