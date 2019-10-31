@@ -1,0 +1,225 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Jdr {
+  date: String!
+  id: ID!
+  name: String!
+  place: String!
+  players: [String]!
+}
+
+type JdrConnection {
+  items: [Jdr]
+  nextToken: String
+}
+
+type Mutation {
+  createJdr(input: CreateJdrInput!): Jdr
+  createPlayer(input: CreatePlayerInput!): Player
+  createUser(input: CreateUserInput!): User
+  deleteJdr(input: DeleteJdrInput!): Jdr
+  deletePlayer(input: DeletePlayerInput!): Player
+  deleteUser(input: DeleteUserInput!): User
+  updateJdr(input: UpdateJdrInput!): Jdr
+  updatePlayer(input: UpdatePlayerInput!): Player
+  updateUser(input: UpdateUserInput!): User
+}
+
+type Player {
+  dex: Int!
+  hp: String!
+  id: ID!
+  int: Int!
+  money: Int!
+  mp: Int!
+  name: String!
+  str: Int!
+}
+
+type PlayerConnection {
+  items: [Player]
+  nextToken: String
+}
+
+type Query {
+  getJdr(id: ID!): Jdr
+  getPlayer(id: ID!): Player
+  getUser(id: ID!): User
+  listJdrs(filter: TableJdrFilterInput, limit: Int, nextToken: String): JdrConnection
+  listPlayers(filter: TablePlayerFilterInput, limit: Int, nextToken: String): PlayerConnection
+  listUsers(filter: TableUserFilterInput, limit: Int, nextToken: String): UserConnection
+}
+
+type Subscription {
+  onCreateJdr(date: String, id: ID, name: String, place: String, players: [String]): Jdr @aws_subscribe(mutations : ["createJdr"])
+  onCreatePlayer(hp: String, id: ID, mp: Int, name: String, str: Int): Player @aws_subscribe(mutations : ["createPlayer"])
+  onCreateUser(email: String, id: ID, jdrs: [String], name: String, phone: String): User @aws_subscribe(mutations : ["createUser"])
+  onDeleteJdr(date: String, id: ID, name: String, place: String, players: [String]): Jdr @aws_subscribe(mutations : ["deleteJdr"])
+  onDeletePlayer(hp: String, id: ID, mp: Int, name: String, str: Int): Player @aws_subscribe(mutations : ["deletePlayer"])
+  onDeleteUser(email: String, id: ID, jdrs: [String], name: String, phone: String): User @aws_subscribe(mutations : ["deleteUser"])
+  onUpdateJdr(date: String, id: ID, name: String, place: String, players: [String]): Jdr @aws_subscribe(mutations : ["updateJdr"])
+  onUpdatePlayer(hp: String, id: ID, mp: Int, name: String, str: Int): Player @aws_subscribe(mutations : ["updatePlayer"])
+  onUpdateUser(email: String, id: ID, jdrs: [String], name: String, phone: String): User @aws_subscribe(mutations : ["updateUser"])
+}
+
+type User {
+  email: String!
+  id: ID!
+  jdrs: [String]!
+  name: String!
+  phone: String!
+}
+
+type UserConnection {
+  items: [User]
+  nextToken: String
+}
+
+input CreateJdrInput {
+  date: String!
+  name: String!
+  place: String!
+  players: [String]!
+}
+
+input CreatePlayerInput {
+  dex: Int!
+  hp: String!
+  int: Int!
+  money: Int!
+  mp: Int!
+  name: String!
+  str: Int!
+}
+
+input CreateUserInput {
+  email: String!
+  jdrs: [String]!
+  name: String!
+  phone: String!
+}
+
+input DeleteJdrInput {
+  id: ID!
+}
+
+input DeletePlayerInput {
+  id: ID!
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableJdrFilterInput {
+  date: TableStringFilterInput
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  place: TableStringFilterInput
+  players: TableStringFilterInput
+}
+
+input TablePlayerFilterInput {
+  dex: TableIntFilterInput
+  hp: TableStringFilterInput
+  id: TableIDFilterInput
+  int: TableIntFilterInput
+  money: TableIntFilterInput
+  mp: TableIntFilterInput
+  name: TableStringFilterInput
+  str: TableIntFilterInput
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input TableUserFilterInput {
+  email: TableStringFilterInput
+  id: TableIDFilterInput
+  jdrs: TableStringFilterInput
+  name: TableStringFilterInput
+  phone: TableStringFilterInput
+}
+
+input UpdateJdrInput {
+  date: String
+  id: ID!
+  name: String
+  place: String
+  players: [String]
+}
+
+input UpdatePlayerInput {
+  dex: Int
+  hp: String
+  id: ID!
+  int: Int
+  money: Int
+  mp: Int
+  name: String
+  str: Int
+}
+
+input UpdateUserInput {
+  email: String
+  id: ID!
+  jdrs: [String]
+  name: String
+  phone: String
+}

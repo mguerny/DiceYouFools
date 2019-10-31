@@ -23,6 +23,7 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.amazonaws.appsync'
 
 android {
     compileSdkVersion 28
@@ -60,6 +61,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     compile 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.amazonaws:aws-android-sdk-appsync:2.6.17'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
