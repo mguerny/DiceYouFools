@@ -5,7 +5,7 @@ description: Dice, you fools !
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -15,11 +15,6 @@ dependencies:
   meta: ^1.1.6
   equatable: 0.1.6
   bloc: ^0.9.0
-  intl: ^0.16.0
-  amazon_cognito_identity_dart: ^0.0.22
-  shared_preferences:
-  apple_sign_in: ^0.1.0
-  flutter_secure_storage: ^3.3.1+1
 
 dev_dependencies:
   flutter_test:
@@ -29,13 +24,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/images/
 
-  fonts:
-    - family: Helvetica
-      fonts:
-        - asset: fonts/Helvetica.ttf
-        - asset: fonts/Helvetica-bold.ttf
-          weight: 700
 
