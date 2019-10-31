@@ -21,3 +21,27 @@ class AuthenticationLoading extends AuthenticationState {
   @override
   String toString() => 'AuthenticationLoading';
 }
+
+class GameListDisplay extends AuthenticationState{
+  @override
+  String toString() => 'GameListDisplay';
+
+}
+
+class GameCreaDisplay extends AuthenticationState{
+  @override
+  String toString() => 'GameCreaDisplay';
+
+}
+
+class GameDispDisplay extends AuthenticationState{
+  @override
+  String toString() => 'GameDispDisplay';
+
+}
+
+class UserDispDisplay extends AuthenticationState{
+  @override
+  String toString() => 'UserDispDisplay';
+
+}

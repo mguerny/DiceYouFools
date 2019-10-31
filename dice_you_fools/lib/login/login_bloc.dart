@@ -31,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         final token = await userRepository.authenticate(
-          username: event.username,
+          email: event.username,
           password: event.password,
         );
 
@@ -41,17 +41,39 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginFailure(error: error.toString());
       }
     }
-    if(event is GoogleButtonPressed){
+    if(event is SignUpButtonPressed){
       yield LoginLoading();
-      print("GoogleButtonPressed");
+      print("SignUpButtonPressed");
       try{
-
-        //final token = await userRepository.authenticateWithGoogle();
+        final token = await userRepository.signUp(email: event.username, password: event.password);
+//        authenticationBloc.dispatch(LoggedIn(token: token));
+        yield LoginInitial();
+      } catch (error){
+        yield LoginFailure(error: error.toString());
+      }
+    }
+    if(event is AppleSignInButtonPressed){
+      try{
+        final token = await userRepository.signInWithApple();
+        authenticationBloc.dispatch(LoggedIn(token: token));
+        yield LoginInitial();
+      } catch (error){
+        yield LoginFailure(error: error.toString());
+      }
+    }
+    if(event is CodeValidateButtonPressed){
+      yield LoginLoading();
+      print("CodeValidateButtonPressed");
+      try{
+        print("code validation " + event.code);
+        print("email validation " + event.email);
+        final token = await userRepository.smsValidation(email: event.email, code: event.code);
         //authenticationBloc.dispatch(LoggedIn(token: token));
         yield LoginInitial();
       } catch (error){
         yield LoginFailure(error: error.toString());
       }
     }
+
   }
 }

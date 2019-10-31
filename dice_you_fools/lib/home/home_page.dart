@@ -41,7 +41,7 @@ class _MyHomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             onPressed: _logout,
-            icon: Image.asset("assets/myemoji.png",),
+            icon: Image.asset("assets/images/calendar.png",),
           ),
         ],
       ),
