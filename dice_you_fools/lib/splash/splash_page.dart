@@ -11,7 +11,7 @@ class SplashPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image.asset(
-              'assets/images/clock.png',
+              'assets/myemoji.png',
               width: 320,
               height: 320,
               /*color: Colors.red,

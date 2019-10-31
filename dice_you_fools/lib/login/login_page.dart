@@ -6,9 +6,6 @@ import 'package:dice_you_fools/user_repository.dart';
 import 'package:dice_you_fools/authentication/authentication.dart';
 import 'package:dice_you_fools/login/login.dart';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:apple_sign_in/apple_sign_in.dart';
-
 class LoginPage extends StatefulWidget {
   final UserRepository userRepository;
 
@@ -33,11 +30,6 @@ class _LoginPageState extends State<LoginPage> {
       userRepository: _userRepository,
       authenticationBloc: _authenticationBloc,
     );
-
-    checkLoggedInState();
-    AppleSignIn.onCredentialRevoked.listen((_) {
-      print("Credentials revoked");
-    });
     super.initState();
   }
 
@@ -59,36 +51,5 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     _loginBloc.dispose();
     super.dispose();
-  }
-  void checkLoggedInState() async {
-    final userId = await FlutterSecureStorage().read(key: "userId");
-    if (userId == null) {
-      print("No stored user ID");
-      return;
-    }
-
-    final credentialState = await AppleSignIn.getCredentialState(userId);
-    switch (credentialState.status) {
-      case CredentialStatus.authorized:
-        print("getCredentialState returned authorized");
-        break;
-
-      case CredentialStatus.error:
-        print(
-            "getCredentialState returned an error: ${credentialState.error.localizedDescription}");
-        break;
-
-      case CredentialStatus.revoked:
-        print("getCredentialState returned revoked");
-        break;
-
-      case CredentialStatus.notFound:
-        print("getCredentialState returned not found");
-        break;
-
-      case CredentialStatus.transferred:
-        print("getCredentialState returned not transferred");
-        break;
-    }
   }
 }
