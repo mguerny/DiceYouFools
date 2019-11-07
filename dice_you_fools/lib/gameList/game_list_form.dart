@@ -232,7 +232,9 @@ class _GameListFormState extends State<GameListForm> {
                         onTap: () async {
                           print("Add Game clicked");
                           final game = await Navigator.pushNamed(context, '/gameCrea');
-                          _games.add(game);
+                          if(game != null){
+                            _games.add(game);
+                          }
                         },
                         child: CircleAvatar( // Plus image
                             backgroundImage: AssetImage("assets/images/plus.png"),

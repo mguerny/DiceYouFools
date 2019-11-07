@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dice_you_fools/gameDisp/game_disp_state.dart';
 import 'package:dice_you_fools/router.dart' as router;
 import 'package:dice_you_fools/routes.dart';
@@ -18,6 +20,10 @@ import 'gameCreation/game_crea_page.dart';
 import 'gameDisp/game_disp_page.dart';
 import 'gameList/game_list_page.dart';
 
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+import 'httpServices/QuerryMutation.dart';
+
 class SimpleBlocDelegate extends BlocDelegate {
   @override
   void onTransition(Transition transition) {
@@ -30,7 +36,30 @@ class SimpleBlocDelegate extends BlocDelegate {
   }
 }
 
-void main() {
+Future main() async {
+
+  final String url = "https://v6pqsjem2rbs7j2qxdwdakljzi.appsync-api.us-east-2.amazonaws.com/graphql"; 
+
+  var body = {QueryMutation().getAllUserQuery()};
+
+  var headers = {"x-api-key":"da2-chyiz4344newpjwfczqxtxtdh4"};
+
+  var response = await http.post(url, headers: headers, body: body);
+
+  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  if (response.statusCode == 200) {
+    var jsonResponse = convert.jsonDecode(response.body);
+    var itemCount = jsonResponse['totalItems'];
+    print("Number of books about http: $itemCount.");
+  } else {
+    print("Request failed with status: ${response.statusCode}.");
+  }
+  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  
   BlocSupervisor().delegate = SimpleBlocDelegate();
   runApp(App(userRepository: UserRepository()));
 }
