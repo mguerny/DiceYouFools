@@ -1,3 +1,4 @@
+import 'package:dice_you_fools/signin/signin.dart';
 import 'package:dice_you_fools/userDisp/user_disp_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

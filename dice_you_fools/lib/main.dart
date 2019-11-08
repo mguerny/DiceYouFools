@@ -1,6 +1,9 @@
+import 'package:dice_you_fools/code_validation/code_val.dart';
 import 'package:dice_you_fools/gameDisp/game_disp_state.dart';
 import 'package:dice_you_fools/router.dart' as router;
 import 'package:dice_you_fools/routes.dart';
+import 'package:dice_you_fools/signin/signin.dart';
+import 'package:dice_you_fools/signup/signup.dart';
 import 'package:dice_you_fools/userDisp/user_disp_page.dart';
 import 'package:flutter/material.dart';
 
@@ -77,10 +80,19 @@ class _AppState extends State<App> {
               return SplashPage();
             }
             if (state is AuthenticationAuthenticated) {
-              return HomePage();
+              return GameListPage();
             }
             if (state is AuthenticationUnauthenticated) {
               return LoginPage(userRepository: _userRepository);
+            }
+            if (state is AuthentificationSignIn){
+              return SigninPage(userRepository: _userRepository);
+            }
+            if (state is AuthentificationCodeValidate){
+              return CodeValidationPage(userRepository: _userRepository);
+            }
+            if (state is AuthentificationSignUp){
+              return SignupPage(userRepository: _userRepository);
             }
             if (state is AuthenticationLoading) {
               return LoadingIndicator();

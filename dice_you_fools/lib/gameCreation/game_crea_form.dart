@@ -31,13 +31,6 @@ class _GameCreaFormState extends State<GameCreaForm> {
   
   List<User> _players = List<User>.from([new User(name: "Michoule F.", email: "a"), 
                                     new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
-                                    new User(name: "Antoirne R.", email: "b"),
                                     new User(name: "Plaul V.", email: "c")]);
   final nameController = TextEditingController();
   final locationController = TextEditingController();

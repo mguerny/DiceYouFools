@@ -47,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
       /*appBar: AppBar(
         title: Text('Login'),
       ),*/
-      backgroundColor: Color.fromRGBO(25, 255, 218, 1),
       body: LoginForm(
         authenticationBloc: _authenticationBloc,
         loginBloc: _loginBloc,
