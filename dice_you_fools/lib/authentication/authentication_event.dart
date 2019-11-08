@@ -19,7 +19,28 @@ class LoggedIn extends AuthenticationEvent {
   String toString() => 'LoggedIn { token: $token }';
 }
 
+class SignedIn extends AuthenticationEvent {
+  final String token;
+
+  SignedIn({@required this.token}) : super([token]);
+
+  @override
+  String toString() => 'SignedIn { token: $token }';
+}
+class SignedUp extends AuthenticationEvent {
+  final String token;
+
+  SignedUp({@required this.token}) : super([token]);
+
+  @override
+  String toString() => 'SignedUp { token: $token }';
+}
+
 class LoggedOut extends AuthenticationEvent {
   @override
   String toString() => 'LoggedOut';
+}
+class CodeValidate extends AuthenticationEvent {
+  @override
+  String toString() => 'CodeValidation';
 }

@@ -1,3 +1,4 @@
+import 'package:dice_you_fools/Model/user.dart';
 import 'package:meta/meta.dart';
 import 'package:dice_you_fools/Model/User.dart';
 import 'package:amazon_cognito_identity_dart/cognito.dart';
@@ -56,27 +57,32 @@ class UserRepository {
     return null;
   }
 
-  Future<String> signUp({@required String email, @required String password,}) async {
+  Future<bool> signUp({@required String email, @required String password,@required String name, @required String phone}) async {
     final userPool = new CognitoUserPool(
         'us-east-1_vlikgVjot', '6tthsuuoeuvt9h35cvv49enng2');
     final userAttributes = [
-      new AttributeArg(name: 'name', value: "Romain"),
-      new AttributeArg(name: 'phone_number', value: "+33601734665"),
+      new AttributeArg(name: 'name', value: name),
+      new AttributeArg(name: 'phone_number', value: phone),
     ];
     print("SignUp USER REPO");
-    var data;
+    CognitoUserPoolData data;
+    var created = false;
     try {
-      data = await userPool.signUp(email, password,userAttributes: userAttributes);
-      print("DATA ======> " + data);
+      data = await userPool.signUp(email, password,userAttributes: userAttributes).then((result){
+        print("result data $result");
+        return ;
+      });
+      created = data.userConfirmed;
+      print("CREATED ======> " + created.toString());
     } on CognitoUserConfirmationNecessaryException catch (e) {
       print("confirmation necessaire !!!!!");
     }
     catch (e) {
       print("ERROR : ");
       print(e);
-      return "error";
+      return null;
     }
-    return 'token';
+    return created;
   }
 
   Future<String> smsValidation({@required String email, @required String code}) async {
@@ -112,7 +118,7 @@ class UserRepository {
       bool passwordChanged = false;
       try {
         passwordChanged = await cognitoUser.changePassword(
-            password, 'Rwjafc6884!');
+            password, 'Password001!');
       } catch (e) {
         print(e);
       }

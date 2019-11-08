@@ -36,11 +36,20 @@ class AuthenticationBloc
       await userRepository.persistToken(event.token);
       yield AuthenticationAuthenticated();
     }
+    if(event is CodeValidate){
+      yield AuthentificationCodeValidate();
+    }
 
     if (event is LoggedOut) {
       yield AuthenticationLoading();
       await userRepository.deleteToken();
       yield AuthenticationUnauthenticated();
+    }
+    if(event is SignedIn){
+      yield AuthentificationSignIn();
+    }
+    if(event is SignedUp){
+      yield AuthentificationSignUp();
     }
   }
 }

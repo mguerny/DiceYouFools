@@ -1,3 +1,5 @@
+import 'package:dice_you_fools/signin/signin.dart';
+
 import 'gameCreation/game_crea_page.dart';
 import 'gameDisp/game_disp_page.dart';
 import 'gameList/game_list_page.dart';

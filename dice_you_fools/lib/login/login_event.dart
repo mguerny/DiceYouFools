@@ -24,19 +24,19 @@ class AppleSignInButtonPressed extends LoginEvent{
   AppleSignInButtonPressed();
 }
 
-class SignUpButtonPressed extends LoginEvent {
-  final String username;
-  final String password;
-
-  SignUpButtonPressed({
-    @required this.username,
-    @required this.password,
-  }) : super([username, password]);
+class SignInButtonPressed extends LoginEvent {
+  SignInButtonPressed(): super();
 
   @override
   String toString() =>
-      'SignUpButtonPressed { username: $username, password: $password }';
+      'SignInButtonPressed ';
 
+}
+
+class SignUpButtonPressed extends LoginEvent{
+  SignUpButtonPressed(): super();
+  @override
+  String toString() => 'SignUpButtonPressed';
 }
 
 class CodeValidateButtonPressed extends LoginEvent{
