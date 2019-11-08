@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,6 +44,16 @@ class _LoginFormState extends State<LoginForm> {
               ),
             );
           });
+        }
+
+        var apple;
+
+        if (Platform.isIOS) {
+          apple = AppleSignInButton(
+            onPressed: _onAppleSignInPressed,
+          );
+        }else{
+          apple = SizedBox(height: 1.0);
         }
 
         return Scaffold(
@@ -114,9 +124,7 @@ class _LoginFormState extends State<LoginForm> {
                             padding: EdgeInsets.only(left: 24.0, right: 24.0),
                             child: Column(
                               children: <Widget>[
-                                AppleSignInButton(
-                                  onPressed: _onAppleSignInPressed,
-                                ),
+                                apple,
                                 SizedBox(height: 38.0),
                                 ButtonTheme(
                                   minWidth: MediaQuery.of(context).size.width,

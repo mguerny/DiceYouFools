@@ -25,6 +25,7 @@ class _SigninFormState extends State<SigninForm> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
   SigninBloc get _signinBloc => widget.signinBloc;
 
   @override
@@ -81,95 +82,116 @@ class _SigninFormState extends State<SigninForm> {
                         SizedBox(height: 48.0),
                         Padding(
                           padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(32.0)
-                                ),
-                                child: TextFormField(
-                                  controller: _usernameController,
-                                  keyboardType: TextInputType.emailAddress,
-                                  autofocus: false,
-                                  style: TextStyle(
-                                    fontFamily: "Quicksand",
-                                    fontWeight: FontWeight.w500,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(32.0)
                                   ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Email',
-                                    hintStyle: TextStyle(
-                                      fontFamily: "Quicksand",
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 22.0,
-                                    ),
-                                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 8.0),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(32.0)
-                                ),
-                                child:
-                                TextFormField(
-                                  controller: _passwordController,
-                                  autofocus: false,
-                                  obscureText: true,
-                                  style: TextStyle(
-                                    fontFamily: "Quicksand",
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  decoration: InputDecoration(
-                                    hintText: 'Mot de passe',
-                                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                                    hintStyle: TextStyle(
-                                      fontFamily: "Quicksand",
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 22.0,
-                                    ),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 36.0),
-                              ButtonTheme(
-                                minWidth: MediaQuery.of(context).size.width,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  onPressed:
-                                  state is! SigninLoading ? _onSigninButtonPressed : null,
-                                  padding: EdgeInsets.all(12),
-                                  color: Colors.white,
-                                  child: Text('Se connecter',
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    controller: _usernameController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    autofocus: false,
                                     style: TextStyle(
-                                      color: Colors.green,
                                       fontFamily: "Quicksand",
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 22.0,
+                                    ),
+                                    decoration: InputDecoration(
+                                      hintText: 'Email',
+                                      hintStyle: TextStyle(
+                                        fontFamily: "Quicksand",
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 22.0,
+                                      ),
+                                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                      border: InputBorder.none,
                                     ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 8.0),
-                              FlatButton(
-                                onPressed: state is! SigninLoading ? _onSignUpButtonPressed : null,
-                                child: Text(
-                                  'Pas encore inscrit ? C\'est par ici ! ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    decoration: TextDecoration.underline,
-                                    fontFamily: "Quicksand",
-                                    fontWeight: FontWeight.w300,
+                                SizedBox(height: 8.0),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(32.0)
+                                  ),
+                                  child:
+                                  TextFormField(
+                                    controller: _passwordController,
+                                    autofocus: false,
+                                    obscureText: true,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please enter some text';
+                                      }
+                                      if(value.length < 6){
+                                        return 'le mot de passe doit etre supperieur à 6 caractères';
+                                      }
+                                      return null;
+                                    },
+                                    style: TextStyle(
+                                      fontFamily: "Quicksand",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    decoration: InputDecoration(
+                                      hintText: 'Mot de passe',
+                                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                      hintStyle: TextStyle(
+                                        fontFamily: "Quicksand",
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 22.0,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 36.0),
+                                ButtonTheme(
+                                  minWidth: MediaQuery.of(context).size.width,
+                                  child: RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    onPressed:() {
+                                      if (_formKey.currentState.validate()) {
+                                        state is! SigninLoading ? _onSigninButtonPressed : null;
+                                      }
+                                    },
+                                    padding: EdgeInsets.all(12),
+                                    color: Colors.white,
+                                    child: Text('Se connecter',
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontFamily: "Quicksand",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 22.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 8.0),
+                                FlatButton(
+                                  onPressed: state is! SigninLoading ? _onSignUpButtonPressed : null,
+                                  child: Text(
+                                    'Pas encore inscrit ? C\'est par ici ! ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      decoration: TextDecoration.underline,
+                                      fontFamily: "Quicksand",
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ]
